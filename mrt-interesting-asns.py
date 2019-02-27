@@ -35,15 +35,16 @@ def getSourceASfromASPath(aspathstring):
     return int(sourceasn)
 
 def parseLine(oneline):
-    status,srcprefixes,aspath,stuff1,stuff2,stuff3,stuff4,communities,collector,timestamp,stuff5 = oneline.split('|')
-    sourceasn = getSourceASfromASPath(aspath)
-    if sourceasn in interesting_asns.keys():
-        # do stuff
-        ts = int(timestamp)
-        eventtime = datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-        prefixes = srcprefixes.split(' ')
+    (status,srcprefixes,aspath,stuff1,stuff2,stuff3,stuff4,communities,collector,timestamp,stuff5) = oneline.split('|')
+    if status == "+" or status == "=":
+        sourceasn = getSourceASfromASPath(aspath)
+        if sourceasn in interesting_asns.keys():
+            # do stuff
+            ts = int(timestamp)
+            eventtime = datetime.utcfromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+            prefixes = srcprefixes.split(' ')
 
-        print ("At %s\n  as%d/%s\n  Advertising network(s): %s\n  with AS-PATH: %s" % (eventtime, sourceasn, interesting_asns[sourceasn], prefixes, aspath))
+            print ("At %s\n  as%d/%s\n  Advertising network(s): %s\n  with AS-PATH: %s" % (eventtime, sourceasn, interesting_asns[sourceasn], prefixes, aspath))
 
 while True:
     try:
