@@ -19,8 +19,8 @@ with open(prefix_file) as fp:
         ## parse line
         parse_me = str(line.rstrip())
         (asnumber, asname) = parse_me.split('|', 2)
-        asnumber = int(asnumber)
-        interesting_asns[asnumber] = asname
+        asn = int(asnumber)
+        interesting_asns[asn] = asname
         ## fetch another line
         line = fp.readline()
 
